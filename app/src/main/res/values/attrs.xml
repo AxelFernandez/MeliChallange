@@ -10,4 +10,5 @@
     </declare-styleable>
 
     <attr name="price" format="reference"/>
+    <attr name="searchButton" format="reference"/>
 </resources>

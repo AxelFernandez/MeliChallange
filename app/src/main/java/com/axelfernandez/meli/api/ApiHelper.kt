@@ -9,4 +9,8 @@ class ApiHelper(private val apiService: ApiService) {
 
     suspend fun searchItem(search: String) = apiService.findItems(search)
 
+    suspend fun getItemDetail(id: String) = apiService.getItemDetail(id)
+
+    suspend fun getItemDescription(id: String) = apiService.getItemDescription(id)
+
 }

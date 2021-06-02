@@ -9,6 +9,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.axelfernandez.meli.R
 import com.axelfernandez.meli.adapters.ResultAdapter
@@ -26,7 +27,6 @@ class ResultFragment : Fragment() {
     }
 
     private lateinit var viewModel: ResultViewModel
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -38,31 +38,40 @@ class ResultFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(
             this,
-            ResultViewModel.Factory(ApiHelper(RetrofitBuilder.buildService()))
+            ResultViewModel.Factory(ApiHelper(RetrofitBuilder.buildService()),this,savedInstanceState)
         ).get(ResultViewModel::class.java)
+        updateAppBarStatus()
+        val search = viewModel.querySaved?:ResultFragmentArgs.fromBundle(arguments ?: return).query
 
-        val arguments = ResultFragmentArgs.fromBundle(arguments ?: return)
-        appbarComponent.title = getString(R.string.results_from_query, arguments.query)
-
-        viewModel.searchItem(arguments.query)
+        viewModel.searchItem(search)
         viewModel.items.observe(viewLifecycleOwner, Observer {
             when (it.status) {
                 Status.LOADING -> {
                     showLoading(true)
                 }
+
                 Status.ERROR -> {
                     Snackbar.make(view, getString(R.string.error_message), Snackbar.LENGTH_LONG)
                         .show()
                     showLoading(false)
+                    rv.isVisible = false
+                    no_connection.isVisible = true
                 }
+
                 Status.SUCCESS -> {
-                    val data = it.data?.results ?: return@Observer
-                    appbarComponent.title = it.data.query
+                    val data = it.data ?: return@Observer
+                    viewModel.querySaved = data.query
+                    appbarComponent.title = getString(R.string.results_from_query, it.data.query)
                     showLoading(false)
-                    rv.layoutManager = LinearLayoutManager(requireContext())
-                    rv.adapter = ResultAdapter(data, requireContext()) {
-                        Toast.makeText(requireContext(),it.id,Toast.LENGTH_LONG).show()
+                    no_connection.isVisible = false
+                    rv.let {recycler->
+                        recycler.isVisible = true
+                        recycler.layoutManager = LinearLayoutManager(requireContext())
+                        recycler.adapter = ResultAdapter(data.results, requireContext()) {item ->
+                            findNavController().navigate(ResultFragmentDirections.actionResultFragmentToItemDetail(item.id))
+                        }
                     }
+
                 }
             }
         })
@@ -71,8 +80,20 @@ class ResultFragment : Fragment() {
             viewModel.searchItem(it)
         }
     }
+
+    override fun onPause() {
+        super.onPause()
+        //Save the state when the mobile is rotating or a new Fragment is open
+        viewModel.titleStatus = appbarComponent.showTitle
+
+    }
     private fun showLoading(show: Boolean){
         progress_circular.isVisible = show
         searching_text.isVisible = show
     }
+    private fun updateAppBarStatus(){
+        appbarComponent.showBackArrow = viewModel.titleStatus
+        appbarComponent.showTitle = viewModel.titleStatus
+    }
+
 }

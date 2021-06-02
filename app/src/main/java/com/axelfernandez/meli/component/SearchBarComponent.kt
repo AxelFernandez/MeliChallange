@@ -5,6 +5,7 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.LinearLayout
+import android.widget.TextView
 import com.axelfernandez.meli.R
 import kotlinx.android.synthetic.main.search_component.view.*
 
@@ -21,7 +22,7 @@ class SearchBarComponent(context: Context, attrs: AttributeSet) : LinearLayout(c
     }
 
     fun searchClickListener(clickListener: (it: View) -> Unit) {
-        search_button.setOnClickListener(clickListener)
+        button_search.setOnClickListener(clickListener)
     }
 
     fun checkIfTextIsNullOrEmpty(): Boolean {

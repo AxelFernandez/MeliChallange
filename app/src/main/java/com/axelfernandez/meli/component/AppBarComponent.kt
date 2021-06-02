@@ -49,23 +49,23 @@ class AppBarComponent(context: Context, attrs: AttributeSet) : LinearLayout(cont
 
             override fun onQueryTextSubmit(p0: String?): Boolean {
                 clickListener(p0?:return false)
-                return true
+                return false
             }
 
             override fun onQueryTextChange(p0: String?): Boolean {
-                return true
+                return false
             }
 
         })
     }
 
-    private var showBackArrow :Boolean
+     var showBackArrow :Boolean
         set(value) {
             back_button.isVisible= value
         }
         get()= back_button.isVisible
 
-    private var showTitle :Boolean
+     var showTitle :Boolean
         set(value) {
             title_app_bar.isVisible= value
         }

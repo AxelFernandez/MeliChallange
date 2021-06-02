@@ -6,15 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.axelfernandez.meli.R
-import com.axelfernandez.meli.models.ItemList
+import com.axelfernandez.meli.models.Item
 import com.axelfernandez.meli.utils.Condition
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_product.view.*
 
 class ResultAdapter (
-    private val items:List<ItemList> = ArrayList(),
+    private val items:List<Item> = ArrayList(),
     private val context: Context,
-    private val itemClickListener: (ItemList) -> Unit
+    private val itemClickListener: (Item) -> Unit
         ): RecyclerView.Adapter<ResultAdapter.ResultViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ResultViewHolder {
@@ -36,10 +36,14 @@ class ResultAdapter (
         return items.size
     }
 
-
     class ResultViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(item :ItemList, itemClickListener: (ItemList) -> Unit, context: Context){
-            itemView.condition.text = Condition.valueOf(item.condition).getTranslation()
+        fun bind(item :Item, itemClickListener: (Item) -> Unit, context: Context){
+            try {
+
+                itemView.condition.text = Condition.valueOf(item.condition).getTranslation()
+            }catch (e:Exception){
+                e.printStackTrace()
+            }
             itemView.item_title.text = item.title
             itemView.price.text = context.getString(R.string.item_price, item.price.toInt().toString())
             itemView.quantity_available.text = context.getString(R.string.item_quantity_available,item.available_quantity.toString())

@@ -1,26 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.itemDetail.ItemDetail">
+    tools:context=".ui.itemDetail.ItemDetailFragment">
+    <include
+        android:id="@+id/no_connection_layout"
+        layout="@layout/no_conection_layout"
+        android:visibility="gone"/>
+
+    <ProgressBar
+        android:id="@+id/progress_circular"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <com.axelfernandez.meli.component.AppBarComponent
+        android:id="@+id/appBarComponent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:showArrow="true" />
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginTop="?actionBarSize">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <com.axelfernandez.meli.component.AppBarComponent
-                android:id="@+id/appBarComponent"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:showArrow="true" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_images"
@@ -28,7 +43,7 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/appBarComponent" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/condition"
@@ -74,7 +89,6 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-
                     android:layout_marginBottom="10dp">
 
                     <TextView
@@ -106,10 +120,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="10dp"
-                android:layout_marginTop="30dp"
-                app:layout_constraintTop_toBottomOf="@id/card_view_description"
-
-                >
+                android:layout_marginVertical="30dp"
+                app:layout_constraintTop_toBottomOf="@id/card_view_description">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -121,20 +133,20 @@
                         style="@style/TextAppearance.AppCompat.Title"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="10dp"
-                        android:text="No era lo que buscabas?"
+                        android:layout_margin="10dp"
+                        android:text="@string/searching_something_else"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <com.axelfernandez.meli.component.SearchBarComponent
+                        android:id="@+id/detail_search_again"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
+                        android:layout_margin="10dp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/search_label" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
-
             </androidx.cardview.widget.CardView>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
-</FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,9 +6,14 @@ enum class Condition(){
             return "Nuevo"
         }
     },
-    used{
+    used {
         override fun getTranslation(): String {
             return "Usado"
+        }
+    },
+    not_specified{
+        override fun getTranslation(): String {
+            return "No Especificado"
         }
     };
     abstract fun getTranslation():String

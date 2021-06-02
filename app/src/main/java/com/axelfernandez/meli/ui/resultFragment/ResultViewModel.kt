@@ -1,9 +1,8 @@
 package com.axelfernandez.meli.ui.resultFragment
 
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewModelScope
+import android.os.Bundle
+import androidx.lifecycle.*
+import androidx.savedstate.SavedStateRegistryOwner
 import com.axelfernandez.meli.api.ApiHelper
 import com.axelfernandez.meli.models.ItemResponse
 import com.axelfernandez.meli.repository.ResultRepository
@@ -12,9 +11,14 @@ import kotlinx.coroutines.launch
 import java.lang.Exception
 
 class ResultViewModel(
+    private val savedStateHandle: SavedStateHandle,
     private val resultRepository: ResultRepository
 ) : ViewModel() {
 
+    companion object{
+        const val QUERY_SAVED = "querySaved"
+        const val TITLE_STATUS = "titleStatus"
+    }
     var items = MutableLiveData<Resource<ItemResponse>>()
 
     fun searchItem(search :String){
@@ -28,12 +32,29 @@ class ResultViewModel(
         }
     }
 
+    var querySaved:String?
+        set(value) = savedStateHandle.set(QUERY_SAVED,value)
+        get() = savedStateHandle.get<String>(QUERY_SAVED)
+
+    var titleStatus: Boolean
+        set(value) = savedStateHandle.set(TITLE_STATUS,value)
+        get() = savedStateHandle.get<Boolean>(TITLE_STATUS) ?: true
+
+
 
     class Factory(
-        private val apiHelper: ApiHelper
-    ) : ViewModelProvider.Factory {
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return ResultViewModel(ResultRepository(apiHelper)) as T
+        private val apiHelper: ApiHelper,
+        owner: SavedStateRegistryOwner,
+        defaultArgs: Bundle?
+    ) : AbstractSavedStateViewModelFactory(owner, defaultArgs) {
+        override fun <T : ViewModel?> create(
+            key: String,
+            modelClass: Class<T>,
+            handle: SavedStateHandle
+        ): T {
+            return ResultViewModel(handle,ResultRepository(apiHelper)) as T
         }
+
+
     }
 }

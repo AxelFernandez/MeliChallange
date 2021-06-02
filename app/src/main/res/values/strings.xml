@@ -1,12 +1,14 @@
 <resources>
     <string name="app_name">Meli</string>
     <string name="search_something">Busca algo asombroso....</string>
-    <string name="home_description">Aqui encontraras los mejores productos</string>
-    <string name="searching_label">Estamos Buscando los mejores productos</string>
-    <string name="error_message">Ocurrio un error, intentalo de nuevo</string>
+    <string name="home_description">Aqui encontraraás los mejores productos</string>
+    <string name="searching_label">Estamos buscando los mejores productos</string>
+    <string name="error_message">Ocurrio un error de conexion, intenta nuevamente</string>
     <string name="results_from_query">Resultados de %s</string>
     <string name="item_price">$ %s</string>
     <string name="item_quantity_sold">%s Vendidos</string>
     <string name="item_quantity_available">%s Disponibles</string>
     <string name="description">Descripción</string>
+    <string name="searching_something_else">¿No era lo que buscabas?</string>
+    <string name="search">Buscar</string>
 </resources>
