@@ -9,6 +9,6 @@ import com.axelfernandez.meli.api.ApiHelper
  */
 class ResultRepository(private val apiHelper: ApiHelper) {
 
-    suspend fun searchItems(search:String,page :Int = 0) = apiHelper.searchItem(search,page)
+    suspend fun searchItems(search:String) = apiHelper.searchItem(search)
 
 }

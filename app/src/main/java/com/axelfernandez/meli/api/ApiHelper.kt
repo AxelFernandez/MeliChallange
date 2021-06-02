@@ -7,7 +7,7 @@ package com.axelfernandez.meli.api
  */
 class ApiHelper(private val apiService: ApiService) {
 
-    suspend fun searchItem(search: String, page: Int = 0) = apiService.findItems(search, page)
+    suspend fun searchItem(search: String) = apiService.findItems(search)
 
     suspend fun getItemDetail(id: String) = apiService.getItemDetail(id)
 
