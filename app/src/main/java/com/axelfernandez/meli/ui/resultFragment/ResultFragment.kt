@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -17,7 +16,9 @@ import com.axelfernandez.meli.api.ApiHelper
 import com.axelfernandez.meli.api.RetrofitBuilder
 import com.axelfernandez.meli.utils.Status
 import com.google.android.material.snackbar.Snackbar
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.home_fragment.*
+import kotlinx.android.synthetic.main.no_conection_or_not_found_layout.view.*
 import kotlinx.android.synthetic.main.result_fragment.*
 
 class ResultFragment : Fragment() {
@@ -55,7 +56,14 @@ class ResultFragment : Fragment() {
                         .show()
                     showLoading(false)
                     rv.isVisible = false
-                    no_connection.isVisible = true
+                    problem_layout.isVisible = true
+                }
+                Status.EMPTY ->{
+                    showLoading(false)
+                    rv.isVisible = false
+                    problem_layout.isVisible = true
+                    problem_layout.error_image.setImageResource(R.drawable.ic_baseline_search_off_24)
+                    problem_layout.error_label.text = getString(R.string.search_not_found)
                 }
 
                 Status.SUCCESS -> {
@@ -63,7 +71,7 @@ class ResultFragment : Fragment() {
                     viewModel.querySaved = data.query
                     appbarComponent.title = getString(R.string.results_from_query, it.data.query)
                     showLoading(false)
-                    no_connection.isVisible = false
+                    problem_layout.isVisible = false
                     rv.let {recycler->
                         recycler.isVisible = true
                         recycler.layoutManager = LinearLayoutManager(requireContext())

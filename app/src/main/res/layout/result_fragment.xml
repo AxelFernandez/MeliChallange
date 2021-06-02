@@ -17,9 +17,9 @@
         app:showSearch="true" />
 
     <include
-        android:id="@+id/no_connection"
+        android:id="@+id/problem_layout"
         android:visibility="gone"
-        layout="@layout/no_conection_layout" />
+        layout="@layout/no_conection_or_not_found_layout" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv"

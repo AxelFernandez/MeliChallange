@@ -7,7 +7,7 @@
     tools:context=".ui.itemDetail.ItemDetailFragment">
     <include
         android:id="@+id/no_connection_layout"
-        layout="@layout/no_conection_layout"
+        layout="@layout/no_conection_or_not_found_layout"
         android:visibility="gone"/>
 
     <ProgressBar

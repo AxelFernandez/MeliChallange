@@ -25,7 +25,12 @@ class ResultViewModel(
         viewModelScope.launch {
             items.postValue(Resource.loading())
             try {
-                items.postValue(Resource.success(resultRepository.searchItems(search)))
+                val response = resultRepository.searchItems(search)
+                if (response.results.isEmpty()){
+                    items.postValue(Resource.empty())
+                }else{
+                    items.postValue(Resource.success(response))
+                }
             }catch (e: Exception){
                 items.postValue(Resource.error(null,e.message!!))
             }
