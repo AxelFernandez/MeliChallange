@@ -14,7 +14,7 @@ y abrirlo con Android Studio...puede que lleve un tiempo, mientras tanto...puede
 Este proyecto esta basado en las guidelines provistas por Google, en este documento 
 voy a especificar en donde se utiliza cada una de ellas
     
-### Componentes Visuales
+## Componentes Visuales
     
 Se crearon dos componentes visuales, 
  - Una AppBar Custom, que maneja el estado, el titulo y un boton de busqueda rápida.
@@ -25,7 +25,7 @@ Se crearon dos componentes visuales,
   que redirige nuevamente a la pantalla de busqueda pero limpiando su Stack, de esta manera, si 
   presiona back, la app lo redirige a la pantalla principal, y no al producto que ya habia visto.
 
-### ViewModels:
+## ViewModels:
     
 Este proyecto cuenta con tres pantallas de las cuales dos de ellas cuentan con su propio View Model.
 _ItemDetailFragmentViewModel_ que pertenece a la pantalla donde se muestra el detalle de un item, 
@@ -42,7 +42,7 @@ no estoy muy familarizado con esas bibliotecas, por lo que opte crear los View M
 y una inyeccion manual.
     
     
-### Repository
+## Repository
     
 Las buenas practicas de Google siempre recomiendan utilizar un unico repositorio por fragment,
 por lo que este proyecto cuenta con dos repositorios, que son los encargados de abstraer 
@@ -53,7 +53,7 @@ los repositorios no son muy complejos. Pero si en un futuro guardamos productos 
 datos del telefono, es en este punto donde debemos ir a buscarlos utilizando lo que recomientda
 Google, que es DAO
 
-### Api Helpers
+## Api Helpers
     
 La clase _ApiHelper_ es la clase que resuelve las llamadas de la api, pero sin crear dependencia 
 con Retrofit pues sin esta clase, deberiamos de instanciar un objeto _RetrofitBuilder_ desde el 
@@ -61,7 +61,7 @@ repositorio. La clase ApiHelper recibe por parametro a _ApiService_ pero es aqui
 de pasarle el objeto de Retrofit desde un fragment, para no generar ninguna dependencia entre 
 estas clases. 
     
-### Resources
+## Resources
 Es la clase encargada de manejar los diferentes estados de la llamada, en Status se crearon cuatro
 
 - Loading: Utilizado cuando el recurso esta cargando (normalmente utilizado al principio de la llamada)
@@ -73,7 +73,7 @@ Cada LiveData que se crea, se utiliza este Resource, para actualizar por los dif
 en que se encuentra la llamada a la api, desde que se establece la conexion y comeinza a cargar, 
 hasta el estado de que si la conexion se realizo correctamente, o falló en algun punto.
     
-### Paginación
+## Paginación
     
 En un Comienzo del proyecto se penso en realizar paginacion con Page 3 de Android, los modelos 
 fueron diseñados con un apartado para Paginacion, pero por falta de tiempo en el proyecto, 
@@ -82,7 +82,7 @@ esta idea fue descartada.
 Como mejora a futuro, se podría integrar paginacion al endpoint
     
     
-### Live Data
+## Live Data
     
 Los Live Data utilizados en este proyecto son observados desde el Fragment y su valor es 
 actualizado de acuerdo a los Resources emitidos anteriormente
@@ -137,7 +137,7 @@ por lo que se opto utilizar la misma arquitectura que en _ResultViewModel_ para 
 Como mejora en este punto, me encantaria aprender una manera correcta de testear esta ultima 
 forma de Live Data.
     
-### Corutinas e Injección de Dependencias
+## Corutinas e Injección de Dependencias
 
 Como punto principal aqui, y como se menciono más arriba se opto por utilizar una inyeccion manual
 en lugar de utilizar Hilt o Dagger, la idea de realizar una inyeccion de dependencias, es 
@@ -152,14 +152,14 @@ en el hilo principal de la app.
     
 ![corrutines](https://i.stack.imgur.com/FvSax.jpg)
 
-### Testing
+## Testing
 
 Este punto, reconozco que es el punto mas debil de mi perfil. Se ha realizado test unitarios 
 en los View Models y test de integracion con espresso para testear la UI, tambien se realizo una 
 integracion con GitHub para correr los test unitarios.
     
     
-### Knows Bugs
+## Knows Bugs
 En este ultimo apartado me gustaria dejar los pequeños bugs que he encontrado y por los tiempos del 
 proyecto no he podido llegar a solucionarlos. 
 
