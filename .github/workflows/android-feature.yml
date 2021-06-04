@@ -8,14 +8,14 @@ on:
 
 jobs:
   test:
-    env:
-      HOST_NAME: hostname.com
     name: Run Unit Tests
     runs-on: ubuntu-18.04
 
     steps:
       - uses: actions/checkout@v1
       - name: set up JDK 1.8
+        env:
+          HOST_NAME: hostname.com
         uses: actions/setup-java@v1
         with:
           java-version: 1.8
