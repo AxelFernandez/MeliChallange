@@ -36,6 +36,7 @@ android {
         }
         release {
             minifyEnabled false
+            buildConfigField "String", "HOST_NAME", '"https://api.mercadolibre.com/"'
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
