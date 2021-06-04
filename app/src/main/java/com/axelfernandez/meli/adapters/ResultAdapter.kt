@@ -38,12 +38,7 @@ class ResultAdapter (
 
     class ResultViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(item :Item, itemClickListener: (Item) -> Unit, context: Context){
-            try {
-
-                itemView.condition.text = Condition.valueOf(item.condition).getTranslation()
-            }catch (e:Exception){
-                e.printStackTrace()
-            }
+            itemView.condition.text = Condition.from(item.condition).getTranslation()
             itemView.item_title.text = item.title
             itemView.price.text = context.getString(R.string.item_price, item.price.toInt().toString())
             itemView.quantity_available.text = context.getString(R.string.item_quantity_available,item.available_quantity.toString())

@@ -22,6 +22,7 @@ import com.axelfernandez.meli.utils.Status
 import kotlinx.android.synthetic.main.home_fragment.*
 import kotlinx.android.synthetic.main.item_detail_fragment.*
 import kotlinx.android.synthetic.main.item_detail_fragment.title
+import kotlinx.coroutines.Dispatchers
 
 class ItemDetailFragment : Fragment() {
 
@@ -40,12 +41,11 @@ class ItemDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProvider(this,ItemDetailViewModel.Factory(ApiHelper(RetrofitBuilder.buildService()))).get(ItemDetailViewModel::class.java)
+        viewModel = ViewModelProvider(this,ItemDetailViewModel.Factory(ApiHelper(RetrofitBuilder.buildService()),Dispatchers.IO)).get(ItemDetailViewModel::class.java)
         val itemId = ItemDetailFragmentArgs.fromBundle(arguments?:return).id
 
-
-        viewModel.getDetail(itemId).observe(viewLifecycleOwner, Observer {
-
+        viewModel.getDetail(itemId)
+        viewModel.item.observe(viewLifecycleOwner, Observer {
             when(it.status){
                 Status.LOADING->{
                     showLoading(true)
@@ -57,12 +57,14 @@ class ItemDetailFragment : Fragment() {
                 }
                 Status.SUCCESS -> {
                     showLoading(false)
+                    rv_images.isVisible = true
                     val item = it.data?:return@Observer
                     bindUI(item)
                 }
             }
         })
-        viewModel.getDescription(itemId).observe(viewLifecycleOwner, Observer {
+        viewModel.getDescription(itemId)
+        viewModel.description.observe(viewLifecycleOwner, Observer {
             when (it.status){
                 Status.ERROR -> {
                     card_view_description.isVisible = false
@@ -91,7 +93,7 @@ class ItemDetailFragment : Fragment() {
     }
 
     private fun bindUI(item: Item){
-        condition.text = Condition.valueOf(item.condition).getTranslation()
+        condition.text = Condition.from(item.condition).getTranslation()
         title.text = item.title
         price.text = resources.getString(R.string.item_price, item.price.toInt().toString())
         rv_images.let {

@@ -1,9 +1,9 @@
 <resources>
-    <string name="app_name">Meli</string>
+    <string name="app_name">Meli Challange</string>
     <string name="search_something">Busca algo asombroso....</string>
     <string name="home_description">Aqui encontrarás los mejores productos</string>
     <string name="searching_label">Estamos buscando los mejores productos</string>
-    <string name="error_message">Ocurrio un error de conexion, intenta nuevamente</string>
+    <string name="error_message">Algo salió mal, intenta nuevamente</string>
     <string name="results_from_query">Resultados de %s</string>
     <string name="item_price">$ %s</string>
     <string name="item_quantity_sold">%s Vendidos</string>

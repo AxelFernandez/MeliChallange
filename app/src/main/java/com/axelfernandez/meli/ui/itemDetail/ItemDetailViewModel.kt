@@ -1,41 +1,52 @@
 package com.axelfernandez.meli.ui.itemDetail
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.liveData
+import androidx.lifecycle.*
 import com.axelfernandez.meli.api.ApiHelper
+import com.axelfernandez.meli.models.Description
 import com.axelfernandez.meli.models.Item
 import com.axelfernandez.meli.repository.DetailRepository
 import com.axelfernandez.meli.utils.Resource
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
-import okhttp3.Dispatcher
-import java.lang.Exception
+import kotlinx.coroutines.launch
 
 class ItemDetailViewModel(
-    private val detailRepository: DetailRepository
+    private val detailRepository: DetailRepository,
+    private val dispatcher: CoroutineDispatcher
 ) : ViewModel() {
 
-    fun getDetail(id : String) = liveData(Dispatchers.IO) {
-        emit(Resource.loading())
-        try {
-            emit(Resource.success(data = detailRepository.getItemDetail(id)))
-        }catch (e:Exception){
-            emit(Resource.error(null, e.message!!))
+    var item = MutableLiveData<Resource<Item>>()
+    var description = MutableLiveData<Resource<Description>>()
+
+    fun getDetail(id: String) {
+        viewModelScope.launch(dispatcher) {
+            item.postValue(Resource.loading())
+            try {
+                item.postValue(Resource.success(data = detailRepository.getItemDetail(id)))
+            } catch (e: Exception) {
+                item.postValue(Resource.error(null, e.message ?: "getDetail Exception"))
+            }
+        }
+
+    }
+
+    fun getDescription(id: String){
+        viewModelScope.launch(dispatcher) {
+            description.postValue(Resource.loading())
+            try {
+                description.postValue(Resource.success(data = detailRepository.getItemDescription(id)))
+            } catch (e: Exception) {
+                description.postValue(Resource.error(null, e.message ?: "getDescription Exception"))
+            }
         }
     }
 
-    fun getDescription(id:String) = liveData(Dispatchers.IO) {
-        emit(Resource.loading())
-        try {
-            emit(Resource.success(data = detailRepository.getItemDescription(id)))
-        }catch (e:Exception){
-            emit(Resource.error(null, e.message!!))
-        }
-    }
-
-    class Factory(private val apiHelper: ApiHelper) : ViewModelProvider.Factory {
+    class Factory(
+        private val apiHelper: ApiHelper,
+        private val dispatcher: CoroutineDispatcher
+    ) : ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return ItemDetailViewModel(DetailRepository(apiHelper)) as T
+            return ItemDetailViewModel(DetailRepository(apiHelper), dispatcher) as T
         }
     }
 }

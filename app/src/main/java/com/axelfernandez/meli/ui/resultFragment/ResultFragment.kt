@@ -20,6 +20,7 @@ import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.home_fragment.*
 import kotlinx.android.synthetic.main.no_conection_or_not_found_layout.view.*
 import kotlinx.android.synthetic.main.result_fragment.*
+import kotlinx.coroutines.Dispatchers
 
 class ResultFragment : Fragment() {
 
@@ -39,7 +40,7 @@ class ResultFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(
             this,
-            ResultViewModel.Factory(ApiHelper(RetrofitBuilder.buildService()),this,savedInstanceState)
+            ResultViewModel.Factory(Dispatchers.IO ,ApiHelper(RetrofitBuilder.buildService()),this,savedInstanceState)
         ).get(ResultViewModel::class.java)
         updateAppBarStatus()
         val search = viewModel.querySaved?:ResultFragmentArgs.fromBundle(arguments ?: return).query

@@ -1,20 +1,25 @@
 package com.axelfernandez.meli.utils
 
-enum class Condition(){
-    new{
+enum class Condition(val value: String){
+    NEW("new"){
         override fun getTranslation(): String {
             return "Nuevo"
         }
     },
-    used {
+    USED("used") {
         override fun getTranslation(): String {
             return "Usado"
         }
     },
-    not_specified{
+    NOT_SPECIFY("not_specify"){
         override fun getTranslation(): String {
             return "No Especificado"
         }
     };
+    companion object {
+        fun from(value: String): Condition {
+            return values().first { it.value == value }
+        }
+    }
     abstract fun getTranslation():String
 }

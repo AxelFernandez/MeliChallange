@@ -1,18 +1,23 @@
 package com.axelfernandez.meli.ui.resultFragment
 
 import android.os.Bundle
+import android.util.Log
 import androidx.lifecycle.*
 import androidx.savedstate.SavedStateRegistryOwner
 import com.axelfernandez.meli.api.ApiHelper
 import com.axelfernandez.meli.models.ItemResponse
 import com.axelfernandez.meli.repository.ResultRepository
 import com.axelfernandez.meli.utils.Resource
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import okhttp3.Dispatcher
 import java.lang.Exception
 
 class ResultViewModel(
     private val savedStateHandle: SavedStateHandle,
-    private val resultRepository: ResultRepository
+    private val resultRepository: ResultRepository,
+    private val dispatcher: CoroutineDispatcher
 ) : ViewModel() {
 
     companion object{
@@ -22,7 +27,7 @@ class ResultViewModel(
     var items = MutableLiveData<Resource<ItemResponse>>()
 
     fun searchItem(search :String){
-        viewModelScope.launch {
+        viewModelScope.launch(dispatcher) {
             items.postValue(Resource.loading())
             try {
                 val response = resultRepository.searchItems(search)
@@ -32,7 +37,7 @@ class ResultViewModel(
                     items.postValue(Resource.success(response))
                 }
             }catch (e: Exception){
-                items.postValue(Resource.error(null,e.message!!))
+                items.postValue(Resource.error(null,e.message?:"Error Rendering items"))
             }
         }
     }
@@ -48,6 +53,7 @@ class ResultViewModel(
 
 
     class Factory(
+        private val dispatcher: CoroutineDispatcher,
         private val apiHelper: ApiHelper,
         owner: SavedStateRegistryOwner,
         defaultArgs: Bundle?
@@ -57,7 +63,7 @@ class ResultViewModel(
             modelClass: Class<T>,
             handle: SavedStateHandle
         ): T {
-            return ResultViewModel(handle,ResultRepository(apiHelper)) as T
+            return ResultViewModel(handle,ResultRepository(apiHelper),dispatcher) as T
         }
 
 
