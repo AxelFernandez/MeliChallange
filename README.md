@@ -5,9 +5,13 @@ _Challange de Prueba para MercadoLibre, la app cuenta con un buscador, los resul
 
 ## Instrucciones para compilar 🚀
 
-La instalacion en los respositorios Android es muy generico, basta con clonar este repositorio 
-y abrirlo con Android Studio...puede que lleve un tiempo, mientras tanto...puedes ir a buscar un café 
+La instalacion en los respositorios Android es muy sencillo:
 
+- Clona el repositorio con esta url `https://github.com/AxelFernandez/MeliChallange.git`
+- Abrelo con Android Studio
+- Espera la sincronizacion de Gradle y luego compila.
+
+Puede tardar un tiempo, mientras tanto...puedes ir a buscar un café
 
 ## Arquitectura y Detalles a tener en cuenta
 
@@ -72,6 +76,11 @@ Es la clase encargada de manejar los diferentes estados de la llamada, en Status
 Cada LiveData que se crea, se utiliza este Resource, para actualizar por los diferentes estandos 
 en que se encuentra la llamada a la api, desde que se establece la conexion y comeinza a cargar, 
 hasta el estado de que si la conexion se realizo correctamente, o falló en algun punto.
+
+En este diagrama se explica cual es la secuencia para las request de las Api y por las distintas
+capas y estados por los que pasa.
+
+![sequence](https://plantuml-server.kkeisuke.dev/svg/VP6zQWCn48JxVGgLIU4Nk2BOCOG4OWmktCjtWn7MIOTsvP2tprwAq-OIecf1Cz_ipvR55wbZ9F9LSghZ1ONefVZhY2Hky-JE0H-7F21sZY77j8-Xlxq75YIKXqVolOIx5pGXqLBEW1Ecp45o-UpS5N82roXlWf6jkwc8Mkqs2jXDuHLnGd46mBy8YuoeEMR_0J4y-_w6D2X1__O-Hkiq0YAhNgVFcHe_vSHGm82_4J_ZpJJ_4Kpxg_dRDZk5SQwbNtdjyipkrRjSidF72wFSls-cRwkTwjs_0000.svg)
     
 ## Paginación
     
@@ -154,9 +163,8 @@ en el hilo principal de la app.
 
 ## Testing
 
-Este punto, reconozco que es el punto mas debil de mi perfil. Se ha realizado test unitarios 
-en los View Models y test de integracion con espresso para testear la UI, tambien se realizo una 
-integracion con GitHub para correr los test unitarios.
+Se ha realizado test unitarios en los View Models y test de integracion con espresso para testear 
+la UI, tambien se realizo una integracion con GitHub para correr los test unitarios.
     
     
 ## Knows Bugs
@@ -175,7 +183,7 @@ STR:
 * [Espresso](https://developer.android.com/training/testing/espresso) - Used for IntegrationTest
 
 
-## Author ✒️
+## Autor ✒️
 
 
 * **Axel Fernandez** - *Developer* - [LinkedIn](https://www.linkedin.com/in/axel-fernandez/)
