@@ -1,4 +1,4 @@
-name: Android UnitTest Flow
+name: UnitTest Action
 
 on:
   push:
